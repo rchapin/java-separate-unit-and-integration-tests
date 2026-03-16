@@ -1,25 +1,32 @@
 package com.ryanchapin.example;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class AppTest {
 
-  @Before
-  public void setup() {
-    System.out.println("From unit test setup");
-    int count = 0;
-    for (int i = 0; i < 10; i++) {
-      count += i;
-      System.out.println("count=" + count);
-    }
+  @Test
+  public void testDoSomething() {
+    System.out.println("Unit testing doSomething");
+    assertTrue(true);
   }
 
-  @Test
-  public void testApp() {
-    System.out.println("From the unit tests");
-    assertTrue(true);
+  private static Stream<Arguments> testAddArgs() {
+    return Stream.of(Arguments.arguments(1, 2, 3), Arguments.arguments(1, 2, 3),
+        Arguments.arguments(1, 2, 3));
+
+  }
+
+  @ParameterizedTest
+  @MethodSource("testAddArgs")
+  public void testAdd(int inputX, int inputY, int expected) {
+    System.out.println("Unit testing add");
+    int actual = App.add(inputX, inputY);
+    assertEquals(expected, actual);
   }
 }
